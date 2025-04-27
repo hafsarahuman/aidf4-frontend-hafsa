@@ -9,7 +9,7 @@ import HotelPage from "./pages/hotel.page";
 import HotelsPage from "./pages/hotels.page";
 import CreateHotelPage from "./pages/create-hotel.page";
 import RootLayout from "./layouts/root.layout"; 
-import MainLayout from "./layouts/Main.layout"; 
+import MainLayout from "./layouts/main.layout"; 
 import AccountPage from "./pages/account.page";
 import ProtectedLayout from "./layouts/protected.layout";
 import AdminProtectedLayout from "./layouts/admin-protected-layout";
