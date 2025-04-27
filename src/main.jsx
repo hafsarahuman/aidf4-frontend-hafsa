@@ -8,7 +8,7 @@ import SignUpPage from "./pages/sign-up.page";
 import HotelPage from "./pages/hotel.page";
 import HotelsPage from "./pages/hotels.page";
 import CreateHotelPage from "./pages/create-hotel.page";
-import RootLayout from "./layouts/root.layout.layout"; 
+import RootLayout from "./layouts/root.layout"; 
 import MainLayout from "./layouts/Main.layout"; 
 import AccountPage from "./pages/account.page";
 import ProtectedLayout from "./layouts/protected.layout";
