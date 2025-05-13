@@ -15,7 +15,7 @@ function CompletePage() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen pt-24">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
@@ -23,7 +23,7 @@ function CompletePage() {
 
   if (isError) {
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md text-center">
+      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md text-center pt-24">
         <h2 className="text-2xl font-bold mb-4 text-red-600">
           Something went wrong
         </h2>
@@ -59,7 +59,7 @@ function CompletePage() {
     return (
       <section
         id="success"
-        className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md my-8"
+        className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md my-8 pt-24"
       >
         <div className="flex justify-center mb-4 text-green-600">
           <svg
