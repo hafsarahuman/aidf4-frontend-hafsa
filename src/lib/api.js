@@ -1,7 +1,7 @@
 // api.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "https://aidf4-backend-hafsa.vercel.app";
 
 export const api = createApi({
   reducerPath: "api",
