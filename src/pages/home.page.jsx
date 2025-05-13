@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "@/components/ui/Navigation";
 import Hero from "@/components/ui/Hero";
 import HotelListings from "@/components/ui/HotelListings";
 import bgImage from "@/assets/images/1.jpg";
@@ -7,7 +6,6 @@ import bgImage from "@/assets/images/1.jpg";
 function HomePage() {
   return (
     <main>
-      <Navigation />
       <div className="relative min-h-screen">
         <Hero />
         <img
