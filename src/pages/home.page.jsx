@@ -1,7 +1,9 @@
 import React from "react";
 import Hero from "@/components/ui/Hero";
 import HotelListings from "@/components/ui/HotelListings";
+import DiscoverSection from "@/components/ui/DiscoverSection";
 import bgImage from "@/assets/images/1.jpg";
+import Offers from "@/components/ui/offers";
 
 function HomePage() {
   return (
@@ -15,6 +17,8 @@ function HomePage() {
         />
       </div>
       <HotelListings />
+      <DiscoverSection/>
+      <Offers/>
       
     </main>
   );

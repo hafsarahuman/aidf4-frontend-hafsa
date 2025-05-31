@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCreateBookingMutation, useGetHotelByIdQuery } from "@/lib/api";
-import { Coffee, MapPin, MenuIcon as Restaurant, Star, Tv, Wifi } from "lucide-react";
+import { Coffee, MapPin, MenuIcon as Restaurant, Star, Tv, Wifi, Building2, UtensilsCrossed } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { BookingFormModal } from "@/components/ui/BookingFormModal";
@@ -83,18 +83,28 @@ const HotelPage = () => {
     <main className="container mx-auto px-4 pt-24 pb-8 min-h-screen">
       <div className="grid md:grid-cols-2 gap-8">
         <div className="space-y-4">
-          <div className="relative w-full h-[400px]">
+          <div className="w-full h-[400px]">
             <img
               src={hotel.image}
               alt={hotel.name}
-              className="absolute object-cover rounded-lg"
+              className="w-full h-full object-cover rounded-lg"
             />
           </div>
-          <div className="flex space-x-2">
-            <Badge variant="secondary">Rooftop View</Badge>
-            <Badge variant="secondary">French Cuisine</Badge>
-            <Badge variant="secondary">City Center</Badge>
-          </div>
+          <div className="flex flex-wrap gap-5 mt-2">
+          <Badge variant="secondary" className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5rounded-full text-sm flex items-center space-x-2">
+            <Building2 className="w-4 h-4" />
+            <span>Rooftop View</span>
+          </Badge>
+          <Badge variant="secondary" className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white  rounded-full text-sm flex items-center space-x-2">
+            <UtensilsCrossed className="w-4 h-4" />
+            <span>French Cuisine</span>
+          </Badge>
+          <Badge variant="secondary" className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-5rounded-full text-sm flex items-center space-x-2">
+            <MapPin className="w-4 h-4" />
+            <span>City Center</span>
+          </Badge>
+        </div>
+
         </div>
         <div className="space-y-6">
           <div className="flex justify-between items-start">
@@ -144,6 +154,21 @@ const HotelPage = () => {
         onClose={() => setShowBookingModal(false)}
         onSubmit={handleBook}
       />
+      <div className="mt-8">
+  <h2 className="text-xl font-semibold mb-4">Hotel Location</h2>
+  <div className="w-full h-[400px] rounded-lg overflow-hidden border shadow">
+    <iframe
+      width="100%"
+      height="100%"
+      loading="lazy"
+      allowFullScreen
+      referrerPolicy="no-referrer-when-downgrade"
+      className="border-0"
+      src={`https://www.google.com/maps?q=${encodeURIComponent(hotel.location)}&output=embed`}
+    ></iframe>
+  </div>
+</div>
+
     </main>
   );
 };
