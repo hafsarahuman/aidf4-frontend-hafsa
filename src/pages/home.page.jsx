@@ -5,6 +5,8 @@ import DiscoverSection from "@/components/ui/DiscoverSection";
 import bgImage from "@/assets/images/1.jpg";
 import Offers from "@/components/ui/offers";
 
+
+
 function HomePage() {
   return (
     <main>
@@ -20,6 +22,7 @@ function HomePage() {
       <DiscoverSection/>
       <Offers/>
       
+
     </main>
   );
 }
