@@ -1,103 +1,112 @@
 // src/pages/account.page.jsx
 
-
 import { useSelector, useDispatch } from "react-redux";
-import { format, isAfter } from "date-fns";
-import { Badge } from "@/components/ui/badge";
+import { MapPin, CalendarCheck, XCircle, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "sonner";
+import { format, isAfter } from "date-fns";
 import { cancelBooking } from "@/lib/features/bookingSlice";
-import { User, Mail, Calendar, Hotel } from "lucide-react";
+import { toast } from "sonner";
 
-const AccountPage = () => {
+function AccountPage() {
   const dispatch = useDispatch();
-  const bookings = useSelector((state) => state.booking.bookings) || [];
+  const bookings = useSelector((state) => state.booking.bookings);
+  const profile = useSelector((state) => state.user.profile); // Make sure this matches your store
 
   const handleCancel = (id) => {
     dispatch(cancelBooking(id));
-    toast.warning(`Booking ${id} has been cancelled`);
+    toast.success("Booking cancelled");
   };
 
   return (
-    <main className="container mx-auto px-4 py-10 pt-24 space-y-10">
-      <h1 className="text-4xl font-bold text-center">My Account</h1>
-
-      {/* User Info */}
-      <div className="text-center space-y-2">
-        <p className="text-lg text-gray-700 flex justify-center items-center gap-2">
-          <User size={18} /> Name: <span className="font-semibold">Hafsa Rahuman</span>
-        </p>
-        <p className="text-lg text-gray-700 flex justify-center items-center gap-2">
-          <Mail size={18} /> Email: <span className="font-semibold">Hafsarahuman@gmail.com</span>
-        </p>
+    <div className="p-6 space-y-6 max-w-4xl mx-auto">
+      {/* Profile Section */}
+      <div className="mt-24 p-6 border rounded-xl bg-white shadow-sm flex items-center gap-4">
+        <div className="w-16 h-16 rounded-full overflow-hidden border">
+          <img
+            src={profile?.image || "https://i.pinimg.com/736x/55/6d/4d/556d4d7afb3864a2dd0748a1df3fc43d.jpg"}
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <h2 className="text-xl font-bold">{profile?.name || "Hafsa Rahuman"}</h2>
+          <p className="text-muted-foreground text-sm">{profile?.email || "hafsarahuman123@gmail.com"}</p>
+        </div>
       </div>
 
-      {/* Bookings */}
-      <section className="space-y-6">
-        <h2 className="text-2xl font-semibold">My Bookings</h2>
+      <h1 className="text-3xl font-bold text-center">Your Bookings</h1>
 
-        {bookings.length === 0 ? (
-          <p className="text-center text-gray-500">You have no bookings yet.</p>
-        ) : (
-          bookings.map((booking) => {
+      {bookings.length === 0 ? (
+        <p className="text-muted-foreground text-center">No bookings yet.</p>
+      ) : (
+        <div className="space-y-6">
+          {bookings.map((booking) => {
             const isUpcoming = isAfter(new Date(booking.checkIn), new Date());
-            const status = isUpcoming ? "Upcoming" : "Completed";
-
             return (
-              <Card key={booking.id} className="shadow-md border">
-                <CardHeader className="flex flex-col md:flex-row justify-between gap-4 md:items-center">
-                  <div>
-                    <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                      <Hotel size={20} />
-                      {booking.hotelName}
-                    </CardTitle>
-                    <p className="text-sm text-muted-foreground">{booking.location}</p>
-                    <p className="text-sm text-gray-700 capitalize">Room: {booking.roomType}</p>
-                    {booking.description && (
-                      <p className="text-sm text-gray-600 mt-1">
-                        <span className="font-medium">Note:</span> {booking.description}
-                      </p>
+              <div
+                key={booking.id}
+                className="border rounded-xl p-4 flex flex-col md:flex-row gap-4 shadow-sm bg-white"
+              >
+                {/* Hotel Image */}
+                <div className="aspect-[4/3] w-full md:w-1/3 overflow-hidden rounded-xl">
+                  <img
+                    src={booking.image || "/placeholder.jpg"}
+                    alt={booking.hotelName}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Booking Info */}
+                <div className="flex-1 space-y-2">
+                  <h2 className="text-xl font-semibold">{booking.hotelName}</h2>
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <MapPin className="w-4 h-4" /> {booking.location}
+                  </p>
+
+                  <div className="text-sm text-muted-foreground flex items-center gap-2">
+                    <CalendarCheck className="w-4 h-4" />
+                    {format(new Date(booking.checkIn), "PPP")} →{" "}
+                    {format(new Date(booking.checkOut), "PPP")} ({booking.nights} nights)
+                  </div>
+
+                  <div className="text-sm">
+                    Room: <span className="capitalize">{booking.roomType}</span>, Adults:{" "}
+                    {booking.adults}, Children: {booking.children}
+                  </div>
+
+                  {booking.specialRequests && (
+                    <p className="text-sm italic">“{booking.specialRequests}”</p>
+                  )}
+
+                  <div className="flex items-center justify-between mt-2">
+                    <span
+                      className={`text-sm font-semibold px-3 py-1 rounded-full ${
+                        isUpcoming ? "bg-blue-100 text-blue-600" : "bg-green-100 text-green-600"
+                      }`}
+                    >
+                      {isUpcoming ? "Upcoming" : "Completed"}
+                    </span>
+
+                    {isUpcoming && (
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => handleCancel(booking.id)}
+                        className="flex items-center gap-1"
+                      >
+                        <XCircle className="w-4 h-4" />
+                        Cancel
+                      </Button>
                     )}
                   </div>
-
-                  <div className="text-sm text-right space-y-1">
-                    <p className="text-muted-foreground flex items-center gap-1 justify-end">
-                      <Calendar size={14} />
-                      Check-in: <span className="font-medium">{format(booking.checkIn, "PPP")}</span>
-                    </p>
-                    <p className="text-muted-foreground flex items-center gap-1 justify-end">
-                      <Calendar size={14} />
-                      Check-out: <span className="font-medium">{format(booking.checkOut, "PPP")}</span>
-                    </p>
-                    <Badge className={isUpcoming ? "bg-green-500" : "bg-gray-500"}>
-                      {status}
-                    </Badge>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="flex justify-between items-center flex-wrap gap-4 text-sm">
-                  <div className="text-muted-foreground">
-                    Total: <span className="font-bold">${booking.total?.toFixed(2)}</span>
-                    <br />
-                    <span className="text-xs text-gray-500">Booking ID: {booking.id}</span>
-                  </div>
-                  {isUpcoming && (
-                    <Button
-                      variant="destructive"
-                      onClick={() => handleCancel(booking.id)}
-                    >
-                      Cancel
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             );
-          })
-        )}
-      </section>
-    </main>
+          })}
+        </div>
+      )}
+    </div>
   );
-};
+}
 
 export default AccountPage;

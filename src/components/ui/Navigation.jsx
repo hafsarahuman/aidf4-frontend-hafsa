@@ -27,6 +27,8 @@ function Navigation() {
         <Link to="/" className="transition-colors hover:text-gray-400">
           Contact
         </Link>
+        
+        
 
         {user?.publicMetadata?.role === "admin" && (
           <Link to="/hotels/create" className="transition-colors hover:text-gray-400">
