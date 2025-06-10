@@ -1,6 +1,7 @@
 import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner"; // Import the toast
 
 const offers = [
   {
@@ -24,6 +25,10 @@ const offers = [
 ];
 
 export default function Offers() {
+  const handleClaim = (offerTitle) => {
+    toast.success(`🎉 Successfully claimed: ${offerTitle}`);
+  };
+
   return (
     <section className="py-12 px-4 md:px-12 bg-gray-50">
       <div className="text-center mb-10">
@@ -47,7 +52,9 @@ export default function Offers() {
             <CardContent className="p-5 space-y-3">
               <CardTitle>{offer.title}</CardTitle>
               <CardDescription>{offer.description}</CardDescription>
-              <Button className="w-full">Claim Offer</Button>
+              <Button className="w-full" onClick={() => handleClaim(offer.title)}>
+                Claim Offer
+              </Button>
             </CardContent>
           </Card>
         ))}
